@@ -33,3 +33,25 @@ You would also need these files:
 ### `constants.ts`
 
 These contain the constants that are essential for date tracking in the email system. You can change the name of the email to be sent and the range.
+
+## Copyright and Usage
+
+More information found at [LICENSE](./LICENSE)
+
+```txt
+Calendar Reminder System - an automation of Google Calendar thru Mail
+Copyright (C) 2023  Juan Miguel Villegas
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
