@@ -1,3 +1,6 @@
+type Calendar = GoogleAppsScript.Calendar.Calendar
+type CalendarEvent = GoogleAppsScript.Calendar.CalendarEvent
+
 function eventFilter(calendar: Calendar, startDate: Date, endDate: Date) {
     const eventsArray: Array<CalendarEvent> = calendar.getEvents(startDate, endDate).filter(event => event !== undefined)
     
