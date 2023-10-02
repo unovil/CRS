@@ -28,6 +28,7 @@ You would also need these files:
 
 * `creds.json`, `.clasp.json` and `.clasprc.json`: these are the files related to pushing and authenticating with Google Cloud Console and Google Apps Script. Learn more on how to set this up on the Clasp GitHub page.
 
+> Note: `calendar.ts` and `email.ts` are not included, and placeholder files are used instead. Rename the files and remove the `sample_` from the name.
 > Warning: These files contain sensitive information. Make sure that when you push to GitHub, you have a `.gitignore` file that ignores these files.
 
 ### `constants.ts`
