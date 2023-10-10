@@ -34,10 +34,11 @@ function calendarReminderSystem() {
 
     // get date
     let now = new Date()
-    now.setHours(0, 0, 0, 0)
-    let end = new Date(now.getTime() + 7 * DAY)
-    end.setHours(23, 59, 59, 999)
-    console.log(`now: ${now.getTime()}, 7 from now: ${end.getTime()}`)
+    let nowMidnight = new Date(now.getTime())
+    nowMidnight.setHours(0, 0, 0, 0)
+    let endMidnight = new Date(nowMidnight.getTime() + RANGE * DAY)
+    endMidnight.setHours(23, 59, 59, 999)
+    console.log(`now: ${now.getTime()}, ${RANGE} from now: ${endMidnight.getTime()}`)
 
     // email addresses
     const sharedUsers = cleanEmails(EMAIL_ADDRESSES)
@@ -49,24 +50,30 @@ function calendarReminderSystem() {
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
     </style>
     <div style="font-family: Roboto, Arial, sans-serif; font-size: 1.2em">
-        <p>Good day! These are the following events for the next 7 days, from now until ${end.toLocaleDateString("en-PH")}.</p>
+        <p>Good day! These are the following events for the next 7 days, from now until ${endMidnight.toLocaleDateString("en-PH")}.</p>
         <br/><br/>
     `
-    
-    for (
-        let i = now; // i = current date
-        i.getTime() < end.getTime(); // time of i is less than time of end
-        i = new Date(i.getTime() + 1 * DAY) // time of i is added 1 full day
-    ) {
-        let sortedEvents = eventFilter(calendar, i, new Date(i.getTime() + 1 * DAY))
+
+    let currentDate = now
+    while (currentDate.getTime() < endMidnight.getTime()) {
+        let midnight = new Date(currentDate.getTime())
+        midnight.setHours(23, 59, 59, 999)
+
+        let sortedEvents = eventFilter(calendar, currentDate, midnight)
+        console.log(currentDate.toLocaleDateString("en-PH", { year:"numeric", month:"short", day:"numeric" }))
+        console.log(sortedEvents)
+
         htmlBody += `
         <p style="font-weight: bold; font-size: 1.5em;">
-            ${i.toLocaleDateString("en-PH", { year:"numeric", month:"short", day:"numeric" })} - 
-            ${i.toLocaleDateString("en-PH", { weekday: 'long' })}
+            ${currentDate.toLocaleDateString("en-PH", { year:"numeric", month:"short", day:"numeric" })} - 
+            ${currentDate.toLocaleDateString("en-PH", { weekday: 'long' })}
         </p>
         <span>${sortedEvents}</span>
         <br/>
         `
+
+        currentDate.setHours(0, 0, 0, 0)
+        currentDate = new Date(currentDate.getTime() + 1 * DAY)
     }
 
     htmlBody += `
@@ -79,7 +86,7 @@ function calendarReminderSystem() {
         </p>
     </div>`
 
-    MailApp.sendEmail(sharedUsers, `Events for ${now.toLocaleDateString("en-PH", { weekday: 'long', year:"numeric", month:"short", day:"numeric"})}`, "", {
+    MailApp.sendEmail(sharedUsers, `${isTesting?"TESTING::":""}Events for ${nowMidnight.toLocaleDateString("en-PH", { weekday: 'long', year:"numeric", month:"short", day:"numeric"})}`, "", {
         htmlBody: htmlBody,
         name: TITLE,
         cc: CC_EMAIL_ADDRESSES
