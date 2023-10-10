@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 /**
  * @type {String}
  */

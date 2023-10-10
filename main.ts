@@ -2,15 +2,18 @@ type Calendar = GoogleAppsScript.Calendar.Calendar
 type CalendarEvent = GoogleAppsScript.Calendar.CalendarEvent
 
 function eventFilter(calendar: Calendar, startDate: Date, endDate: Date) {
+    // get events then filter them to exclude "undefined" events (i don't know why they exist)
     const eventsArray: Array<CalendarEvent> = calendar.getEvents(startDate, endDate).filter(event => event !== undefined)
     
+    // distinguishes between all-day events and events with specific time
     let eventsStringArray: Array<String> = eventsArray.map(event => {
         if (event.isAllDayEvent()) {
             return `<p><span style="font-weight: bold;">No spec. time</span>: ${event.getTitle()}</p>`
         } else {
             const startTime = new Date(event.getStartTime().getTime())
             const endTime = new Date(event.getEndTime().getTime())
-
+            
+            // email formatting
             const options = {hour: '2-digit', minute: '2-digit'} as const
             return `<p><span style="font-weight: bold;">${startTime.toLocaleTimeString("en-PH", options)} - ${endTime.toLocaleTimeString("en-PH", options)}</span>: ${event.getTitle()}</p>`
         }
@@ -19,6 +22,7 @@ function eventFilter(calendar: Calendar, startDate: Date, endDate: Date) {
     return eventsStringArray.join('\n')
 }
 
+// split by newlines then remove first and last element (which are empty strings)
 let cleanEmails = ((emailList: String) => {
     return emailList.split('\n').slice(1, -1).map((str) => str.trim()).join(',')
 })
