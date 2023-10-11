@@ -35,6 +35,13 @@ You would also need these files:
 
 These contain the constants that are essential for date tracking in the email system. You can change the name of the email to be sent and the range.
 
+## Todo
+
+- [X] develop successfully
+- [ ] make it more portable to others (literals to remove from `main.ts`)
+- [ ] change single time events (ex. 7AM - 7AM) to a single time (ex. 7AM)
+    - [ ] change HTML system to table-based rather than \<p\> based
+
 ## Copyright and Usage
 
 More information found at [LICENSE](./LICENSE)
