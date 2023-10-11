@@ -1,13 +1,7 @@
-/**
- * @type {String}
- */
-const EMAIL_ADDRESSES = `
+const EMAIL_ADDRESSES: string = `
 email_1
 email_2
 ...
 `
 
-/**
- * @type {String}
- */
-const CC_EMAIL_ADDRESSES: string = `email_here`
+const CC_EMAIL_ADDRESSES: string = `cc_email_here`
